@@ -1,102 +1,248 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ScrivenerProject Identifier="TESTPROJ-0001" Version="2.0" Creator="Scrivener 3" Modified="2026-01-15 10:30:00 -0700" ModID="ABCD1234">
+<ScrivenerProject Identifier="TESTPROJ-0001" Version="2.0" Creator="SCRMAC-3.3.6-16305" Device="writers-mac" Author="Test Author" Modified="2026-01-15 10:30:00 -0700" ModID="ABCD1234-EF56-7890-ABCD-EF1234567890">
     <Binder>
-        <BinderItem UUID="11111111-1111-1111-1111-111111111111" Type="DraftFolder" Created="2026-01-01 09:00:00 -0700" Modified="2026-01-15 10:00:00 -0700">
+        <BinderItem UUID="11111111-1111-1111-1111-111111111111" Type="DraftFolder" Created="2025-06-01 09:00:00 -0700" Modified="2026-01-15 10:00:00 -0700">
             <Title>Draft</Title>
             <MetaData>
                 <IncludeInCompile>Yes</IncludeInCompile>
             </MetaData>
             <Children>
-                <BinderItem UUID="22222222-2222-2222-2222-222222222222" Type="Folder" Created="2026-01-01 09:05:00 -0700" Modified="2026-01-10 14:00:00 -0700">
-                    <Title>Part One</Title>
+                <BinderItem UUID="AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA" Type="Folder" Created="2025-06-01 09:05:00 -0700" Modified="2025-06-01 09:05:00 -0700">
+                    <Title>Front Matter</Title>
                     <MetaData>
                         <IncludeInCompile>Yes</IncludeInCompile>
+                        <SectionType>FD9FB48E-A96C-4B29-8E3D-AA8DC11D0382</SectionType>
                     </MetaData>
                     <Children>
-                        <BinderItem UUID="33333333-3333-3333-3333-333333333333" Type="Text" Created="2026-01-02 08:00:00 -0700" Modified="2026-01-12 11:30:00 -0700">
-                            <Title>Chapter 1: The Beginning</Title>
-                            <MetaData>
-                                <IncludeInCompile>Yes</IncludeInCompile>
-                                <LabelID>7</LabelID>
-                                <StatusID>2</StatusID>
-                            </MetaData>
-                        </BinderItem>
-                        <BinderItem UUID="44444444-4444-4444-4444-444444444444" Type="Text" Created="2026-01-03 09:00:00 -0700" Modified="2026-01-14 16:45:00 -0700">
-                            <Title>Chapter 2: The Journey</Title>
+                        <BinderItem UUID="BBBBBBBB-BBBB-BBBB-BBBB-BBBBBBBBBBBB" Type="Text" Created="2025-06-01 09:10:00 -0700" Modified="2025-06-01 09:10:00 -0700">
+                            <Title>Epigraph</Title>
                             <MetaData>
                                 <IncludeInCompile>Yes</IncludeInCompile>
                             </MetaData>
                         </BinderItem>
                     </Children>
                 </BinderItem>
-                <BinderItem UUID="55555555-5555-5555-5555-555555555555" Type="Folder" Created="2026-01-05 10:00:00 -0700" Modified="2026-01-15 09:00:00 -0700">
-                    <Title>Part Two</Title>
+                <BinderItem UUID="22222222-2222-2222-2222-222222222222" Type="Folder" Created="2025-06-15 09:05:00 -0700" Modified="2025-12-10 14:00:00 -0700">
+                    <Title>Part One</Title>
                     <MetaData>
                         <IncludeInCompile>Yes</IncludeInCompile>
                     </MetaData>
                     <Children>
-                        <BinderItem UUID="66666666-6666-6666-6666-666666666666" Type="Text" Created="2026-01-06 11:00:00 -0700" Modified="2026-01-15 10:30:00 -0700">
-                            <Title>Chapter 3: Homecoming</Title>
+                        <BinderItem UUID="33333333-3333-3333-3333-333333333333" Type="Folder" Created="2025-06-20 08:00:00 -0700" Modified="2025-12-12 11:30:00 -0700">
+                            <Title>Chapter 1: The Beginning</Title>
                             <MetaData>
                                 <IncludeInCompile>Yes</IncludeInCompile>
+                                <LabelID>7</LabelID>
+                                <StatusID>2</StatusID>
                                 <CustomMetaData>
                                     <MetaDataItem>
                                         <FieldID>pov_character</FieldID>
-                                        <Value>Elena</Value>
+                                        <Value>Marguerite</Value>
+                                    </MetaDataItem>
+                                </CustomMetaData>
+                            </MetaData>
+                            <Children>
+                                <BinderItem UUID="33333333-3333-3333-3333-333333333334" Type="Text" Created="2025-06-20 08:15:00 -0700" Modified="2025-12-12 11:00:00 -0700">
+                                    <Title>The Bookshop</Title>
+                                    <MetaData>
+                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                        <LabelID>7</LabelID>
+                                        <StatusID>2</StatusID>
+                                    </MetaData>
+                                </BinderItem>
+                                <BinderItem UUID="33333333-3333-3333-3333-333333333335" Type="Text" Created="2025-06-21 10:00:00 -0700" Modified="2025-12-12 11:30:00 -0700">
+                                    <Title>The Market Square</Title>
+                                    <MetaData>
+                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                        <LabelID>7</LabelID>
+                                        <StatusID>3</StatusID>
+                                    </MetaData>
+                                </BinderItem>
+                            </Children>
+                        </BinderItem>
+                        <BinderItem UUID="44444444-4444-4444-4444-444444444444" Type="Folder" Created="2025-07-03 09:00:00 -0700" Modified="2025-12-14 16:45:00 -0700">
+                            <Title>Chapter 2: The Journey</Title>
+                            <MetaData>
+                                <IncludeInCompile>Yes</IncludeInCompile>
+                                <StatusID>3</StatusID>
+                                <CustomMetaData>
+                                    <MetaDataItem>
+                                        <FieldID>pov_character</FieldID>
+                                        <Value>Lena</Value>
+                                    </MetaDataItem>
+                                </CustomMetaData>
+                            </MetaData>
+                            <Children>
+                                <BinderItem UUID="44444444-4444-4444-4444-444444444445" Type="Text" Created="2025-07-03 09:10:00 -0700" Modified="2025-12-14 15:00:00 -0700">
+                                    <Title>The Road North</Title>
+                                    <MetaData>
+                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                        <StatusID>3</StatusID>
+                                    </MetaData>
+                                </BinderItem>
+                                <BinderItem UUID="44444444-4444-4444-4444-444444444446" Type="Text" Created="2025-07-05 14:00:00 -0700" Modified="2025-12-14 16:45:00 -0700">
+                                    <Title>Mountain Pass</Title>
+                                    <MetaData>
+                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                        <StatusID>2</StatusID>
+                                    </MetaData>
+                                </BinderItem>
+                            </Children>
+                        </BinderItem>
+                        <BinderItem UUID="CCCCCCCC-CCCC-CCCC-CCCC-CCCCCCCCCCCC" Type="Text" Created="2025-08-10 11:00:00 -0700" Modified="2025-11-20 09:00:00 -0700">
+                            <Title>Chapter 3: Letters Home</Title>
+                            <MetaData>
+                                <IncludeInCompile>Yes</IncludeInCompile>
+                                <LabelID>8</LabelID>
+                                <StatusID>1</StatusID>
+                                <CustomMetaData>
+                                    <MetaDataItem>
+                                        <FieldID>pov_character</FieldID>
+                                        <Value>Lena</Value>
                                     </MetaDataItem>
                                 </CustomMetaData>
                             </MetaData>
                         </BinderItem>
                     </Children>
                 </BinderItem>
+                <BinderItem UUID="55555555-5555-5555-5555-555555555555" Type="Folder" Created="2025-09-05 10:00:00 -0700" Modified="2026-01-15 09:00:00 -0700">
+                    <Title>Part Two</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                    </MetaData>
+                    <Children>
+                        <BinderItem UUID="66666666-6666-6666-6666-666666666666" Type="Text" Created="2025-09-06 11:00:00 -0700" Modified="2026-01-15 10:30:00 -0700">
+                            <Title>Chapter 4: Homecoming</Title>
+                            <MetaData>
+                                <IncludeInCompile>Yes</IncludeInCompile>
+                                <LabelID>9</LabelID>
+                                <StatusID>3</StatusID>
+                                <CustomMetaData>
+                                    <MetaDataItem>
+                                        <FieldID>pov_character</FieldID>
+                                        <Value>Lena</Value>
+                                    </MetaDataItem>
+                                </CustomMetaData>
+                            </MetaData>
+                        </BinderItem>
+                        <BinderItem UUID="DDDDDDDD-DDDD-DDDD-DDDD-DDDDDDDDDDDD" Type="Text" Created="2025-10-01 08:00:00 -0700" Modified="2025-10-15 14:00:00 -0700">
+                            <Title>Chapter 5: What Remained</Title>
+                            <MetaData>
+                                <IncludeInCompile>Yes</IncludeInCompile>
+                                <LabelID>8</LabelID>
+                                <StatusID>1</StatusID>
+                                <CustomMetaData>
+                                    <MetaDataItem>
+                                        <FieldID>pov_character</FieldID>
+                                        <Value>Marguerite</Value>
+                                    </MetaDataItem>
+                                </CustomMetaData>
+                            </MetaData>
+                        </BinderItem>
+                        <BinderItem UUID="EEEEEEEE-EEEE-EEEE-EEEE-EEEEEEEEEEEE" Type="Text" Created="2025-11-01 09:00:00 -0700" Modified="2025-11-01 09:00:00 -0700">
+                            <Title>Chapter 6: New Roots</Title>
+                            <MetaData>
+                                <IncludeInCompile>Yes</IncludeInCompile>
+                                <StatusID>1</StatusID>
+                            </MetaData>
+                        </BinderItem>
+                    </Children>
+                </BinderItem>
             </Children>
         </BinderItem>
-        <BinderItem UUID="77777777-7777-7777-7777-777777777777" Type="ResearchFolder" Created="2026-01-01 09:00:00 -0700" Modified="2026-01-08 13:00:00 -0700">
+        <BinderItem UUID="77777777-7777-7777-7777-777777777777" Type="ResearchFolder" Created="2025-06-01 09:00:00 -0700" Modified="2025-12-08 13:00:00 -0700">
             <Title>Research</Title>
             <MetaData>
-                <IncludeInCompile>Yes</IncludeInCompile>
+                <IncludeInCompile>No</IncludeInCompile>
             </MetaData>
             <Children>
-                <BinderItem UUID="88888888-8888-8888-8888-888888888888" Type="Text" Created="2026-01-04 15:00:00 -0700" Modified="2026-01-08 13:00:00 -0700">
+                <BinderItem UUID="88888888-8888-8888-8888-888888888888" Type="Folder" Created="2025-06-04 15:00:00 -0700" Modified="2025-12-08 13:00:00 -0700">
                     <Title>Character Notes</Title>
+                    <MetaData>
+                        <IncludeInCompile>No</IncludeInCompile>
+                    </MetaData>
+                    <Children>
+                        <BinderItem UUID="88888888-8888-8888-8888-888888888881" Type="Text" Created="2025-06-04 15:10:00 -0700" Modified="2025-12-08 12:00:00 -0700">
+                            <Title>Lena Vasik</Title>
+                            <MetaData>
+                                <IncludeInCompile>No</IncludeInCompile>
+                            </MetaData>
+                        </BinderItem>
+                        <BinderItem UUID="88888888-8888-8888-8888-888888888882" Type="Text" Created="2025-06-04 15:20:00 -0700" Modified="2025-12-08 12:30:00 -0700">
+                            <Title>Marguerite Audet</Title>
+                            <MetaData>
+                                <IncludeInCompile>No</IncludeInCompile>
+                            </MetaData>
+                        </BinderItem>
+                    </Children>
+                </BinderItem>
+                <BinderItem UUID="FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF" Type="Text" Created="2025-06-10 09:00:00 -0700" Modified="2025-08-20 11:00:00 -0700">
+                    <Title>World Building</Title>
                     <MetaData>
                         <IncludeInCompile>No</IncludeInCompile>
                     </MetaData>
                 </BinderItem>
             </Children>
         </BinderItem>
-        <BinderItem UUID="99999999-9999-9999-9999-999999999999" Type="TrashFolder" Created="2026-01-01 09:00:00 -0700" Modified="2026-01-01 09:00:00 -0700">
+        <BinderItem UUID="99999999-9999-9999-9999-999999999999" Type="TrashFolder" Created="2025-06-01 09:00:00 -0700" Modified="2025-12-01 09:00:00 -0700">
             <Title>Trash</Title>
             <MetaData>
                 <IncludeInCompile>No</IncludeInCompile>
             </MetaData>
+            <Children>
+                <BinderItem UUID="10101010-1010-1010-1010-101010101010" Type="Text" Created="2025-07-15 08:00:00 -0700" Modified="2025-12-01 09:00:00 -0700">
+                    <Title>Deleted Scene - Old Opening</Title>
+                    <MetaData>
+                        <IncludeInCompile>No</IncludeInCompile>
+                    </MetaData>
+                </BinderItem>
+            </Children>
         </BinderItem>
     </Binder>
     <LabelSettings>
+        <Title>Label</Title>
+        <DefaultLabelID>-1</DefaultLabelID>
         <Labels>
             <Label ID="-1">No Label</Label>
-            <Label ID="7" Color="0.993495 0.164181 0.133498">Red</Label>
-            <Label ID="8" Color="0.122671 0.415899 0.999218">Blue</Label>
-            <Label ID="9" Color="0.106656 0.739498 0.178757">Green</Label>
+            <Label ID="7" Color="0.993495 0.701099 0.732856">Red</Label>
+            <Label ID="8" Color="0.462532 0.77414 0.999218">Blue</Label>
+            <Label ID="9" Color="0.498547 0.858438 0.497677">Green</Label>
+            <Label ID="10" Color="0.993495 0.841586 0.504625">Orange</Label>
+            <Label ID="11" Color="0.807423 0.670498 0.912115">Purple</Label>
         </Labels>
     </LabelSettings>
     <StatusSettings>
+        <Title>Status</Title>
+        <DefaultStatusID>-1</DefaultStatusID>
         <StatusItems>
             <Status ID="-1">No Status</Status>
             <Status ID="1">To Do</Status>
             <Status ID="2">In Progress</Status>
             <Status ID="3">First Draft</Status>
-            <Status ID="4">Final Draft</Status>
+            <Status ID="4">Revised Draft</Status>
+            <Status ID="5">Final Draft</Status>
         </StatusItems>
     </StatusSettings>
     <CustomMetaDataSettings>
-        <MetaDataField>
-            <ID>pov_character</ID>
+        <MetaDataField ID="pov_character" Type="Text" Wraps="Yes">
             <Title>POV Character</Title>
-            <Type>Text</Type>
-            <Wraps>Yes</Wraps>
         </MetaDataField>
     </CustomMetaDataSettings>
+    <SectionTypes>
+        <TypeDefinitions>
+            <Type ID="FD9FB48E-A96C-4B29-8E3D-AA8DC11D0382">Front Matter</Type>
+            <Type ID="A1B2C3D4-E5F6-7890-ABCD-EF1234567890">Chapter</Type>
+            <Type ID="B2C3D4E5-F6A7-8901-BCDE-F12345678901">Scene</Type>
+        </TypeDefinitions>
+    </SectionTypes>
     <ProjectBookmarks/>
-    <Collections/>
+    <Collections>
+        <Collection Type="Binder" ID="C0C0C0C0-C0C0-C0C0-C0C0-C0C0C0C0C0C0" Color="0.17 0.15 0.13">
+            <Title>Binder</Title>
+        </Collection>
+    </Collections>
+    <ProjectTargets>
+        <DraftTarget Type="Words">80000</DraftTarget>
+        <SessionTarget Type="Words">1000</SessionTarget>
+    </ProjectTargets>
 </ScrivenerProject>

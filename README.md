@@ -66,7 +66,7 @@ Edit the config file at `~/Library/Application Support/Claude/claude_desktop_con
 {
   "mcpServers": {
     "scrivener": {
-      "command": "uv",
+      "command": "/Users/YOURNAME/.local/bin/uv",
       "args": [
         "run",
         "--directory", "/path/to/scrivener-mcp",
@@ -78,7 +78,8 @@ Edit the config file at `~/Library/Application Support/Claude/claude_desktop_con
 }
 ```
 
-Replace both paths:
+Replace the paths:
+- `/Users/YOURNAME/.local/bin/uv` -- full path to `uv` (run `which uv` in Terminal to find it). Claude Desktop doesn't inherit your shell PATH, so the full path is required.
 - `/path/to/scrivener-mcp` -- where you cloned this repo
 - `/path/to/your/scrivener/projects` -- directory containing your `.scriv` bundles
 
@@ -100,15 +101,13 @@ Replace both paths:
 }
 ```
 
-> **Tip:** If Claude Desktop can't find `uv`, use its full path. Run `which uv` in Terminal to find it (usually `~/.local/bin/uv`).
-
 **Multiple project directories:** Use `--project` to list specific `.scriv` bundles:
 
 ```json
 {
   "mcpServers": {
     "scrivener": {
-      "command": "uv",
+      "command": "/Users/YOURNAME/.local/bin/uv",
       "args": [
         "run",
         "--directory", "/path/to/scrivener-mcp",
@@ -145,8 +144,8 @@ You should see your projects listed. Then:
 - `--project-dir` should point to the directory _containing_ `.scriv` bundles, not to a `.scriv` bundle itself (use `--project` for that).
 - The directory is scanned one level deep -- it won't find projects in nested subdirectories.
 
-**"uv: command not found" (Claude Desktop)**
-- Use the full path to `uv` as the `"command"` value. Run `which uv` in Terminal to find it.
+**"Failed to spawn process" or "uv: command not found" (Claude Desktop)**
+- Make sure the `"command"` value is the full path to `uv` (e.g., `/Users/jane/.local/bin/uv`). Claude Desktop does not inherit your shell PATH. Run `which uv` in Terminal to find the path.
 
 **"error: Failed to resolve"**
 - Make sure the `--directory` path points to where you cloned this repo (the directory containing `pyproject.toml`).

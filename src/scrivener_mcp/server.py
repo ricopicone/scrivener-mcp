@@ -17,6 +17,7 @@ from scrivener_mcp.reader import (
     read_notes,
     read_synopsis,
     word_count,
+    word_count_fast,
 )
 from scrivener_mcp.search import search_binder, search_text
 from scrivener_mcp.snapshot import list_snapshots, read_snapshot
@@ -105,21 +106,23 @@ def _resolve_item(
 def _format_binder_tree(
     parser: ScrivxParser, items: list[BinderItem], depth: int = 0
 ) -> str:
-    """Format binder items as an indented tree."""
+    """Format binder items as an indented tree.
+
+    Uses fast file-size-based word count estimates to avoid parsing every RTF file.
+    """
     lines = []
     for item in items:
         indent = "  " * depth
         data_path = parser.data_path(item.uuid)
         wc = ""
         if not item.is_folder:
-            text = read_document_content(data_path)
-            if text:
-                wc = f" ({word_count(text)} words)"
+            est = word_count_fast(data_path)
+            if est > 0:
+                wc = f" (~{est} words)"
         else:
-            # Aggregate word count for folders
-            total = _folder_word_count(parser, item)
+            total = _folder_word_count_fast(parser, item)
             if total > 0:
-                wc = f" ({total} words total)"
+                wc = f" (~{total} words total)"
 
         type_icon = "📁" if item.is_folder else "📄"
         meta_parts = []
@@ -138,16 +141,14 @@ def _format_binder_tree(
     return "\n".join(lines)
 
 
-def _folder_word_count(parser: ScrivxParser, folder: BinderItem) -> int:
-    """Recursively count words in all children of a folder."""
+def _folder_word_count_fast(parser: ScrivxParser, folder: BinderItem) -> int:
+    """Recursively estimate words in all children of a folder using file size."""
     total = 0
     for child in folder.children:
         if child.is_folder:
-            total += _folder_word_count(parser, child)
+            total += _folder_word_count_fast(parser, child)
         else:
-            data_path = parser.data_path(child.uuid)
-            text = read_document_content(data_path)
-            total += word_count(text)
+            total += word_count_fast(parser.data_path(child.uuid))
     return total
 
 
@@ -508,7 +509,7 @@ def get_project_targets(project_path: str) -> str:
     draft_wc = 0
     for top in binder:
         if top.item_type == "DraftFolder":
-            draft_wc = _folder_word_count(parser, top)
+            draft_wc = _folder_word_count_fast(parser, top)
             break
 
     lines = ["Project targets:"]
