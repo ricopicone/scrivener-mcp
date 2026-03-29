@@ -39,7 +39,7 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 ### 2. Clone this repo
 
 ```bash
-git clone https://github.com/yourusername/scrivener-mcp.git
+git clone https://github.com/ricopicone/scrivener-mcp.git
 ```
 
 That's it -- no `pip install` step. `uv` handles dependencies automatically when the server runs.
