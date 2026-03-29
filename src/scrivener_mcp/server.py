@@ -545,10 +545,9 @@ def get_labels_and_statuses(project_path: str) -> str:
     return "\n".join(lines)
 
 
-# ── Tools: Write ──
+# ── Tools: Write (registered conditionally via --enable-writes) ──
 
 
-@mcp.tool()
 def update_synopsis(
     project_path: str, text: str, title: str = "", uuid: str = ""
 ) -> str:
@@ -571,7 +570,6 @@ def update_synopsis(
         return str(e)
 
 
-@mcp.tool()
 def update_notes(
     project_path: str, text: str, title: str = "", uuid: str = ""
 ) -> str:
@@ -594,7 +592,6 @@ def update_notes(
         return str(e)
 
 
-@mcp.tool()
 def update_document(
     project_path: str, text: str, title: str = "", uuid: str = ""
 ) -> str:
@@ -618,7 +615,6 @@ def update_document(
         return str(e)
 
 
-@mcp.tool()
 def append_text(
     project_path: str, text: str, title: str = "", uuid: str = ""
 ) -> str:
@@ -641,7 +637,6 @@ def append_text(
         return str(e)
 
 
-@mcp.tool()
 def get_audit_log(project_path: str, last_n: int = 50) -> str:
     """View the log of all write operations performed by this MCP server.
 
@@ -651,6 +646,17 @@ def get_audit_log(project_path: str, last_n: int = 50) -> str:
     """
     parser = _get_parser(project_path)
     return read_audit_log(parser.scriv_path, last_n)
+
+
+# ── Write tool registration ──
+
+_WRITE_TOOLS = [update_synopsis, update_notes, update_document, append_text, get_audit_log]
+
+
+def _register_write_tools() -> None:
+    """Register write tools with the MCP server. Called only when --enable-writes is set."""
+    for func in _WRITE_TOOLS:
+        mcp.tool()(func)
 
 
 # ── Main ──
@@ -671,6 +677,12 @@ def main():
         action="append",
         help="Path to a specific .scriv project (can be repeated)",
     )
+    arg_parser.add_argument(
+        "--enable-writes",
+        action="store_true",
+        default=False,
+        help="Enable write tools (synopsis, notes, document content). Disabled by default.",
+    )
     args = arg_parser.parse_args()
 
     # Set environment from CLI args
@@ -682,6 +694,9 @@ def main():
 
     if paths:
         os.environ["SCRIVENER_PROJECTS"] = ":".join(paths)
+
+    if args.enable_writes:
+        _register_write_tools()
 
     mcp.run()
 

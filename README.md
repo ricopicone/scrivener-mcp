@@ -7,13 +7,14 @@ An MCP server that lets Claude read, search, and write to [Scrivener 3](https://
 - **Browse** your binder hierarchy with word counts and metadata
 - **Read** any document, chapter, synopsis, or notes by name (fuzzy matching)
 - **Search** across all documents with context snippets
-- **Write** synopses, notes, and document content with automatic safety controls
+- **Write** synopses, notes, and document content with automatic safety controls (disabled by default)
 - **Snapshot** every change so you can always roll back from Scrivener's UI
 
 ## Safety model
 
 Scrivener auto-saves every 2 seconds and does not detect external file changes. Writing to a project while Scrivener has it open **will silently lose your changes**. This server handles that:
 
+- **Write tools are disabled by default.** Pass `--enable-writes` to opt in.
 - **Lock detection:** Every write checks for Scrivener's `user.lock` file. If Scrivener has the project open, writes are refused with a clear message.
 - **Automatic snapshots:** Before any document content is modified, a Scrivener-native snapshot is created. These show up in Scrivener's Snapshots panel so you can compare or restore.
 - **Audit log:** Every write operation is logged to `.scrivener-mcp-audit.log` inside the `.scriv` bundle (a hidden file Scrivener ignores). The log records timestamps, what changed, and snapshot references.
@@ -25,23 +26,25 @@ Scrivener auto-saves every 2 seconds and does not detect external file changes. 
 
 ## Setup
 
-### Prerequisites
+### 1. Install uv
 
-- **macOS** (Scrivener 3 for Mac -- the `.scriv` format is a macOS document package)
-- **Python 3.10+**
-- **Scrivener 3** projects (`.scriv` bundles)
+This project uses [uv](https://docs.astral.sh/uv/) to manage its Python environment automatically. No global Python packages to install or maintain.
 
-### Step 1: Clone and install
+If you don't have `uv` yet:
+
+```bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+
+### 2. Clone this repo
 
 ```bash
 git clone https://github.com/yourusername/scrivener-mcp.git
-cd scrivener-mcp
-pip install -e .
 ```
 
-This installs the `scrivener-mcp` command and the `scrivener_mcp` Python package.
+That's it -- no `pip install` step. `uv` handles dependencies automatically when the server runs.
 
-### Step 2: Find your Scrivener projects
+### 3. Find your Scrivener projects
 
 Scrivener projects are `.scriv` bundles (directories that look like files in Finder). They're wherever you saved them -- commonly in `~/Documents/` or a synced folder. To find them:
 
@@ -49,73 +52,86 @@ Scrivener projects are `.scriv` bundles (directories that look like files in Fin
 find ~/Documents -name "*.scriv" -type d 2>/dev/null
 ```
 
-Note the directory that contains your `.scriv` project(s). For example, if your project is at `~/Documents/My Novel.scriv`, the project directory is `~/Documents`.
+Note the path. For example, if your project is at `~/Documents/My Novel.scriv`, the project directory is `~/Documents`.
 
-### Step 3: Configure Claude
+### 4. Configure Claude
+
+Pick the Claude interface you're using:
 
 #### Claude Desktop
 
-Add to your Claude Desktop config file:
-
-- **macOS:** `~/Library/Application Support/Claude/claude_desktop_config.json`
+Edit the config file at `~/Library/Application Support/Claude/claude_desktop_config.json`:
 
 ```json
 {
   "mcpServers": {
     "scrivener": {
-      "command": "python",
-      "args": ["-m", "scrivener_mcp", "--project-dir", "/Users/YOURNAME/Documents/Scrivener"],
-      "env": {}
-    }
-  }
-}
-```
-
-Replace `/Users/YOURNAME/Documents/Scrivener` with the directory containing your `.scriv` project(s).
-
-**If your projects are in multiple directories**, use `--project` to list them individually:
-
-```json
-{
-  "mcpServers": {
-    "scrivener": {
-      "command": "python",
+      "command": "uv",
       "args": [
-        "-m", "scrivener_mcp",
-        "--project", "/Users/YOURNAME/Documents/My Novel.scriv",
-        "--project", "/Users/YOURNAME/Dropbox/Short Stories.scriv"
-      ],
-      "env": {}
+        "run",
+        "--directory", "/path/to/scrivener-mcp",
+        "scrivener-mcp",
+        "--project-dir", "/path/to/your/scrivener/projects"
+      ]
     }
   }
 }
 ```
 
-**If `python` isn't found**, use the full path. To find it:
+Replace both paths:
+- `/path/to/scrivener-mcp` -- where you cloned this repo
+- `/path/to/your/scrivener/projects` -- directory containing your `.scriv` bundles
 
-```bash
-which python3
+**Example** with real paths:
+
+```json
+{
+  "mcpServers": {
+    "scrivener": {
+      "command": "/Users/jane/.local/bin/uv",
+      "args": [
+        "run",
+        "--directory", "/Users/jane/scrivener-mcp",
+        "scrivener-mcp",
+        "--project-dir", "/Users/jane/Documents"
+      ]
+    }
+  }
+}
 ```
 
-Then use that path (e.g., `/usr/local/bin/python3`) in place of `"python"` above.
+> **Tip:** If Claude Desktop can't find `uv`, use its full path. Run `which uv` in Terminal to find it (usually `~/.local/bin/uv`).
+
+**Multiple project directories:** Use `--project` to list specific `.scriv` bundles:
+
+```json
+{
+  "mcpServers": {
+    "scrivener": {
+      "command": "uv",
+      "args": [
+        "run",
+        "--directory", "/path/to/scrivener-mcp",
+        "scrivener-mcp",
+        "--project", "/Users/jane/Documents/My Novel.scriv",
+        "--project", "/Users/jane/Dropbox/Short Stories.scriv"
+      ]
+    }
+  }
+}
+```
 
 #### Claude Code (CLI)
 
-Add to your Claude Code MCP settings:
-
 ```bash
-claude mcp add scrivener -- python -m scrivener_mcp --project-dir ~/Documents/Scrivener
+claude mcp add scrivener -- \
+  uv run --directory /path/to/scrivener-mcp \
+  scrivener-mcp --project-dir /path/to/your/scrivener/projects
 ```
 
-Or with environment variables instead of CLI args:
+### 5. Verify it works
 
-```bash
-claude mcp add scrivener -e SCRIVENER_PROJECT_DIR=/Users/YOURNAME/Documents/Scrivener -- python -m scrivener_mcp
-```
-
-### Step 4: Verify it works
-
-Restart Claude (Desktop or CLI) after changing the config. Then try:
+Restart Claude after changing the config. Then try:
 
 > "List my Scrivener projects"
 
@@ -126,16 +142,14 @@ You should see your projects listed. Then:
 ### Troubleshooting
 
 **"No Scrivener projects found"**
-- Check that the path in your config points to the directory _containing_ `.scriv` bundles, not to the `.scriv` bundle itself (unless you used `--project`).
-- The directory is scanned one level deep -- it won't find projects inside nested subdirectories.
+- `--project-dir` should point to the directory _containing_ `.scriv` bundles, not to a `.scriv` bundle itself (use `--project` for that).
+- The directory is scanned one level deep -- it won't find projects in nested subdirectories.
 
-**"python: command not found"**
-- Use the full path to your Python interpreter. Run `which python3` to find it.
-- If you installed with `pyenv`, the shim path is `~/.pyenv/shims/python3`.
+**"uv: command not found" (Claude Desktop)**
+- Use the full path to `uv` as the `"command"` value. Run `which uv` in Terminal to find it.
 
-**"No module named scrivener_mcp"**
-- Make sure you ran `pip install -e .` in the `scrivener-mcp` directory.
-- If you have multiple Python versions, make sure the `pip` you used matches the `python` in your config. Try `python3 -m pip install -e .` explicitly.
+**"error: Failed to resolve"**
+- Make sure the `--directory` path points to where you cloned this repo (the directory containing `pyproject.toml`).
 
 **Write refused: "Scrivener has this project open"**
 - This is intentional. Close Scrivener before writing, then reopen it after. Scrivener will pick up the changes on next open.
@@ -162,7 +176,9 @@ You should see your projects listed. Then:
 | `get_project_targets` | Word count targets and progress |
 | `get_labels_and_statuses` | List the project's defined labels and statuses |
 
-### Writing
+### Writing (disabled by default)
+
+Write tools are **not available** unless you pass `--enable-writes` when starting the server. This is a deliberate safety default.
 
 | Tool | Description |
 |------|-------------|
@@ -172,7 +188,13 @@ You should see your projects listed. Then:
 | `append_text` | Append text to a document (snapshot created first) |
 | `get_audit_log` | View the log of all write operations |
 
-All write tools:
+To enable, add `--enable-writes` to the args in your config:
+
+```json
+"args": ["run", "--directory", "/path/to/scrivener-mcp", "scrivener-mcp", "--project-dir", "/path", "--enable-writes"]
+```
+
+When enabled, all write tools:
 1. Refuse if Scrivener has the project open (`user.lock`)
 2. Create a Scrivener-native snapshot before modifying content (visible in Scrivener's Snapshots panel)
 3. Log the operation to the audit log
@@ -219,11 +241,12 @@ After discussing and drafting, Claude can write or append to the document. A sna
 ### CLI arguments
 
 ```
-python -m scrivener_mcp [OPTIONS]
+scrivener-mcp [OPTIONS]
 
 Options:
   --project-dir PATH    Directory containing .scriv projects (scanned one level deep)
   --project PATH        Path to a specific .scriv bundle (can be repeated)
+  --enable-writes       Enable write tools (disabled by default)
 ```
 
 ### Environment variables
@@ -240,23 +263,24 @@ CLI arguments set these environment variables internally. You can use either app
 ## Development
 
 ```bash
-# Install with dev dependencies
-pip install -e ".[dev]"
-
 # Run tests
-pytest
+uv run --extra dev pytest
 
 # Run tests with verbose output
-pytest -v
+uv run --extra dev pytest -v
+
+# Run the server directly
+uv run scrivener-mcp --project-dir /path/to/projects
 ```
 
 ### Project structure
 
 ```
 scrivener-mcp/
+  pyproject.toml
   src/scrivener_mcp/
     __init__.py
-    __main__.py       # Entry point for python -m
+    __main__.py       # Entry point
     server.py         # FastMCP server and tool definitions
     parser.py         # .scrivx XML parsing and binder tree
     reader.py         # RTF-to-text and file reading
