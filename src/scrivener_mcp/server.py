@@ -48,16 +48,24 @@ def _get_project_dirs() -> list[Path]:
     return dirs
 
 
-def _find_projects() -> list[Path]:
-    """Find all .scriv bundles in configured directories."""
+def _find_projects() -> list[tuple[Path, bool]]:
+    """Find all .scriv bundles in configured directories (recursive).
+
+    Returns (path, is_available) tuples. iCloud-evicted projects are detected
+    but marked as unavailable.
+    """
     projects = []
     for d in _get_project_dirs():
         if d.suffix == ".scriv" and d.is_dir():
-            projects.append(d)
+            projects.append((d, True))
         elif d.is_dir():
-            for child in sorted(d.iterdir()):
-                if child.suffix == ".scriv" and child.is_dir():
-                    projects.append(child)
+            for scriv in sorted(d.rglob("*.scriv")):
+                if scriv.is_dir():
+                    projects.append((scriv, True))
+            # Detect iCloud-evicted .scriv bundles (appear as .scriv.icloud stub files)
+            for stub in sorted(d.rglob(".*.scriv.icloud")):
+                name = stub.name[1:].replace(".icloud", "")  # ".Foo.scriv.icloud" -> "Foo.scriv"
+                projects.append((stub.parent / name, False))
     return projects
 
 
@@ -165,10 +173,15 @@ def list_projects() -> str:
             "SCRIVENER_PROJECTS environment variable."
         )
     lines = []
-    for p in projects:
-        parser = ScrivxParser(p)
-        locked = "🔒 (Scrivener has it open)" if parser.is_locked() else "✅"
-        lines.append(f"- {p.stem} {locked}\n  Path: {p}")
+    for p, available in projects:
+        if not available:
+            lines.append(
+                f"- {p.stem} ☁️ (not downloaded — open in Finder to download from iCloud)\n  Path: {p}"
+            )
+        else:
+            parser = ScrivxParser(p)
+            locked = "🔒 (Scrivener has it open)" if parser.is_locked() else "✅"
+            lines.append(f"- {p.stem} {locked}\n  Path: {p}")
     return "\n".join(lines)
 
 
